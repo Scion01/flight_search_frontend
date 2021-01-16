@@ -1,0 +1,11 @@
+:root{
+    --light-back: rgb(241, 241, 241);
+} 
+
+.light-background{
+    background-color: var(--light-back);
+}
+
+.heroText{
+    
+}

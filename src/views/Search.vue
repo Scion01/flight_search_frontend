@@ -27,7 +27,7 @@
                     item-text="Origin City"
                     label="Origin City"
                     placeholder="Start typing to search"
-                    prepend-icon="mdi-database-search"
+                    prepend-icon="mdi-shield-airplane-outline"
                     return-object
                 ></v-autocomplete>
                 <v-autocomplete
@@ -39,7 +39,7 @@
                     item-text="Origin City"
                     label="Origin City"
                     placeholder="Start typing to search"
-                    prepend-icon="mdi-database-search"
+                    prepend-icon="mdi-shield-airplane"
                     return-object
                 ></v-autocomplete>
 
@@ -195,6 +195,7 @@
 </template>
 
 <script>
+import './../assets/main.css';
 export default {
     name: 'Search',
     data: ()=>({
@@ -259,7 +260,7 @@ export default {
 }
 .filterPanel{
     margin: 1rem 5rem 1rem 1rem;
-    background-color: rgb(241, 241, 241);
+    background-color: var(--light-back);
     border-radius: 5%;
 }
 .dataContainer{
