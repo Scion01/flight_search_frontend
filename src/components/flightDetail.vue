@@ -1,9 +1,9 @@
 <template>
-    <v-flex xs12 class="light-background">
+    <v-flex xs12 class="light-background mb-5">
         <v-row>
             <v-col>
-                <div class="heroText">{{cost}}</div>
-                <div class="detailText">{{flightData[0].flight_name}}</div>
+                <div class="heroText">{{flightData[0].cost}}</div>
+                <div class="detailText">{{flightData[0].flight_no}}</div>
                 <div class="detailText">{{flightData[0].source+">"+flightData[0].destination}}</div>
                 <div class="detailText">{{"Depart: "+flightData[0].departure}}</div>
                 <div class="detailText">{{"Arrival: "+flightData[0].arrival}}</div>
@@ -23,7 +23,7 @@
                 ></v-img>
                 <v-btn
                     class="ma-2"
-                    color="info">
+                    color="primary">
                     Book this flight
                     <template v-slot:loader>
                         <span class="custom-loader">
@@ -44,10 +44,11 @@ export default {
 
     }),
     props: {
-        cost: Number,
-        logoUrl: String,
         flightData: Array,
     },
+    created(){
+        
+    }
 
 }
 </script>

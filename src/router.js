@@ -16,7 +16,11 @@ const routes = [
     name: 'search',
     title: 'SearchFlights',
     component: Search,
-  }
+  },
+  {
+    path: '*',
+    redirect: '/search'
+  },
 ];
   
   export default new Router({
