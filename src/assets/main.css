@@ -3,7 +3,7 @@
 } 
 
 .light-background{
-    background-color: var(--light-back);
+    background-color: var(--light-back) !important;
 }
 
 .heroText{

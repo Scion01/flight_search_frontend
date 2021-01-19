@@ -1,10 +1,10 @@
 <template>
     <v-container fluid class="mainContainer">
         <v-toolbar dense color="primary">
-            <v-toolbar-title >Flight Search</v-toolbar-title>
+            <v-toolbar-title class="white--text" >Flight Search</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon>
-            <v-icon dark >mdi-account-question-outline</v-icon>
+            <v-btn @click="showHelp= true" icon>
+            <v-icon dark class="white--text" >mdi-head-question-outline</v-icon>
             </v-btn>
         </v-toolbar>
          
@@ -184,10 +184,13 @@
                         </v-btn>
                 </v-form>
             </v-col>
-             
-            <v-col cols="7">
-                <div v-for="(flight,id) in flightsData['flights']" :key="id">
-                    <flightDetail :flightData="[flight]" />
+            <v-col align-self="center" cols="7" v-if="flightsData['flights'] && flightsData['flights'].length == 0">
+                <div class="floatCenter">No Data for these filters :( </div>
+                <div class="floatCenter">Try playing a bit more with those filters :P</div>
+            </v-col> 
+            <v-col cols="7" v-else>
+                <div v-for="(flight,id) in flightsData['flights']" :key="id" class="mb-4">
+                    <flightDetail :flightData="flight" />
                 </div>
                 <v-pagination
                     v-if="pageLength > 0"
@@ -216,6 +219,30 @@
             </v-btn>
             </template>
         </v-snackbar>
+        <v-dialog v-model="showHelp" width="500">
+            <v-card>
+                <v-card-title class="primary white--text" primary-title>
+                    About This Tool
+                </v-card-title>
+                
+                <v-card-text class="mt-2">
+                    The Default data loaded are all flights, the APIs are paginated and so is the frontend, to get filtered results
+                    use the filters on left and click "SEARCH". EZPZ! The 'Booking' doesn't work..
+                </v-card-text>
+
+                <v-divider></v-divider>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    flat
+                    @click="showHelp = false"
+                >
+                    Close
+                </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
          
     </v-container>
 </template>
@@ -261,7 +288,8 @@ export default {
         ],
         destRules:[
             v => !!v || 'Field is required'
-        ]
+        ],
+        showHelp: false
     }),
     methods :{
         enableArrival(){
@@ -278,6 +306,7 @@ export default {
             this.passengerCount = 1;
             this.source = this.destination = "";
             this.filtersApplied = false;
+            this.getAllFlights(0);
         },
         async applyFilters(iPage = 1){
             this.filtersApplied = true;
@@ -298,8 +327,8 @@ export default {
                 return: this.arrival,
                 departure: this.departure,
                 passenger_count: this.passengerCount,
-                price_high: this.costHigh,
-                price_low: this.costFloor,
+                price_high: this.priceRange[1],
+                price_low: this.priceRange[0],
                 page: iPage,
             }
             try {
@@ -321,7 +350,6 @@ export default {
             }
         },
         getCodeFromCity(iCity){
-            
             for(let key in this.$store.state.cities){
                 if(this.$store.state.cities[key].full_name == iCity)
                     return key;
@@ -367,5 +395,9 @@ export default {
 }
 .dataContainer{
     padding-top: 3rem;
+}
+.floatCenter{
+    width: 100%;
+    text-align: center;
 }
 </style>
